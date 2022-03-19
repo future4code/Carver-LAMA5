@@ -1,0 +1,28 @@
+POST http://localhost:3000/user/signup
+Content-Type: application/json
+
+{
+    "name": "Jhonny",
+    "email": "jhonny@hotmail.com",
+    "password": "123456",
+    "role": "NORMAl"
+}
+
+###
+POST http://localhost:3000/user/login
+Content-Type: application/json
+
+{
+    "email": "jhonny@hotmail.com",
+    "password": "123456"
+}
+
+###
+POST http://localhost:3000/band/create
+Content-Type: application/json
+
+{
+    "name": "A7X",
+    "musicGenre": "Rock",
+    "responsible": "Jonas"
+}
