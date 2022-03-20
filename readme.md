@@ -1,4 +1,4 @@
-# LAMA = Labenu Music Awards
+# LAMA - Labenu Music Awards
 
 ## Primeiros Passos
 
