@@ -38,7 +38,13 @@ export class UserBusiness {
             throw new CustomError(422, "Please, inform a role for new user.")
         }
         if (role.toLocaleUpperCase() !== "ADMIN" && role.toLocaleUpperCase() !== "NORMAL") {
-            throw new Error("Role must be ADMIN, or NORMAL.")
+            throw new CustomError(422, "Role must be ADMIN, or NORMAL.")
+        }
+
+        const userRegistered = await this.userData.getUserByEmail(email)
+
+        if (userRegistered) {
+            throw new CustomError(409, "This e-mail is already in use")
         }
 
         const hashPassword = await this.hashManager.hash(password)
