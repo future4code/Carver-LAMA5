@@ -9,8 +9,9 @@ export class UserDatabase extends BaseDatabase implements UserRepository {
 
   signup = async (user: User) => {
     try {
-      await BaseDatabase
-        .connection(this.TABLE_NAME)
+      await this
+        .getConnection()
+        (this.TABLE_NAME)
         .insert({
           "id": user.getId(),
           "name": user.getName(),
@@ -23,35 +24,60 @@ export class UserDatabase extends BaseDatabase implements UserRepository {
         throw new Error(error.message)
       }
     }
-    this.closeConnection()
-
+    await BaseDatabase.destroyConnection()
   }
 
   getUserByEmail = async (email: string) => {
     try {
-      const queryResult: any = await BaseDatabase
-        .connection(this.TABLE_NAME)
+      const queryResult: any = await this
+        .getConnection()
+        (this.TABLE_NAME)
         .select()
         .where({ email })
-      
-      if(queryResult[0]){
-      const result = new User(
-        queryResult[0]!.id,
-        queryResult[0]!.name,
-        queryResult[0]!.email,
-        queryResult[0]!.password,
-        queryResult[0]!.role,
-      )
+
+      if (queryResult[0]) {
+        const result = new User(
+          queryResult[0]!.id,
+          queryResult[0]!.name,
+          queryResult[0]!.email,
+          queryResult[0]!.password,
+          queryResult[0]!.role,
+        )
         return result
       } else {
         return null
       }
-      
     } catch (error) {
       if (error instanceof CustomError) {
         throw new Error(error.message)
       }
     }
+  }
+  getUserById = async (id: string) => {
+    try {
+      const queryResult: any = await this
+        .getConnection()
+        (this.TABLE_NAME)
+        .select()
+        .where({ id })
 
+      if (queryResult[0]) {
+        const result = new User(
+          queryResult[0]!.id,
+          queryResult[0]!.name,
+          queryResult[0]!.email,
+          queryResult[0]!.password,
+          queryResult[0]!.role,
+        )
+        return result
+      } else {
+        return null
+      }
+
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw new Error(error.message)
+      }
+    }
   }
 }

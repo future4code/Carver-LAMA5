@@ -26,5 +26,6 @@ export class Band {
 export type BandInputDTO = {
     name: string,
     musicGenre: string,
-    responsible: string
+    responsible: string,
+    userToken: string
 }
